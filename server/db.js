@@ -31,18 +31,37 @@ const createTables = async () => {
   await client.query(SQL);
 };
 
-
 // create customer
-const createCustomer = async (name) => {};
+const createCustomer = async (name) => {
+  const SQL = `
+        INSERT INTO Customers(id, name) VALUES($1, $2) RETURNING *
+    `;
+  const response = await client.query(SQL, [uuid.v4(), name]);
+  return response.rows[0];
+};
 
 // create restaurant
-const createRestaurant = async (name) => {};
+const createRestaurant = async (name) => {
+  const SQL = `
+        INSERT INTO Restaurants(id, name) VALUES($1, $2) RETURNING *
+    `;
+  const response = await client.query(SQL, [uuid.v4(), name]);
+  return response.rows[0];
+};
 
-// fetch customer
-const fetchCustomer = async (id) => {};
+// fetch customers
+const fetchCustomers = async (id) => {
+    const SQL = `SELECT * FROM Customers`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
 
-// fetch restaurant
-const fetchRestaurant = async (id) => {};
+// fetch restaurants
+const fetchRestaurants = async (id) => {
+    const SQL = `SELECT * FROM Restaurants`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
 
 // create reservation
 const createReservation = async (
@@ -57,11 +76,11 @@ const destroyReservation = async (id) => {};
 
 //export
 module.exports = {
-    createTables,
-    createCustomer,
-    createRestaurant,
-    createReservation,
-    fetchCustomer,
-    fetchRestaurant,
-    destroyReservation
-  };
+  createTables,
+  createCustomer,
+  createRestaurant,
+  createReservation,
+  fetchCustomers,
+  fetchRestaurants,
+  destroyReservation,
+};

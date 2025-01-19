@@ -7,6 +7,8 @@ const {
   createCustomer,
   createRestaurant,
   createReservation,
+  fetchCustomers,
+  fetchRestaurants,
   destroyReservation,
 } = require("./db");
 
@@ -29,7 +31,13 @@ const init = async () => {
   await createTables();
   console.log('created tables');
   
+    // test: create customer 
+    // console.log(await createCustomer('Bob'));
+     
+    // test: create restaurant
+    // console.log(await createRestaurant('White Castle'));
 
+    
   // middleware
   // note: middleware run in order they are defined
   // note: error-handling at end
