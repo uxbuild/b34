@@ -1,6 +1,15 @@
 // express, client(db), port(db)
 const { express, client, PORT } = require("./common");
 
+// db functions..
+const {
+  createTables,
+  createCustomer,
+  createRestaurant,
+  createReservation,
+  destroyReservation,
+} = require("./db");
+
 // app
 const app = express();
 
@@ -15,6 +24,11 @@ const init = async () => {
   //connect db
   await client.connect();
   console.log("connected db");
+
+  // create tables
+  await createTables();
+  console.log('created tables');
+  
 
   // middleware
   // note: middleware run in order they are defined

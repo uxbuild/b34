@@ -7,9 +7,9 @@ const uuid = require("uuid");
 const createTables = async () => {
   // SQL
   const SQL = `
-    DROP TABLE IF EXISTS Customers;
-    DROP TABLE IF EXISTS Restaurants;
-    DROP TABLE IF EXISTS Reservations;
+    DROP TABLE IF EXISTS Customers CASCADE;
+    DROP TABLE IF EXISTS Restaurants CASCADE;
+    DROP TABLE IF EXISTS Reservations CASCADE;
 
     CREATE TABLE Customers(
         id UUID PRIMARY KEY,
@@ -31,12 +31,6 @@ const createTables = async () => {
   await client.query(SQL);
 };
 
-// create user
-const createUser = async ({ name }) => {
-  // SQL
-  const SQL = ``;
-  await client.query(SQL);
-};
 
 // create customer
 const createCustomer = async (name) => {};
@@ -60,3 +54,14 @@ const createReservation = async (
 
 // destroy reservation
 const destroyReservation = async (id) => {};
+
+//export
+module.exports = {
+    createTables,
+    createCustomer,
+    createRestaurant,
+    createReservation,
+    fetchCustomer,
+    fetchRestaurant,
+    destroyReservation
+  };
