@@ -2,3 +2,4 @@
 
 - index route
 - createTables db
+- createCustomer, createRestaurant
