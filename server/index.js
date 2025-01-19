@@ -10,7 +10,11 @@ const path = require("path");
 //init
 const init = async () => {
   // init
-  console.log("init..");
+  console.log("init express");
+
+  //connect db
+  await client.connect();
+  console.log("connected db");
 
   // middleware
   // note: middleware run in order they are defined
@@ -21,6 +25,11 @@ const init = async () => {
 
   //morgan
   app.use(require("morgan")("dev"));
+
+  // index route
+  app.get("/", (req, res) => {
+    res.send("B34 Workshop: ACME Restaurant Planner");
+  });
 
   // ERROR handling, invoked when there are 4 arguments.
   app.use((err, req, res, next) => {

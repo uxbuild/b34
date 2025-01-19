@@ -3,7 +3,7 @@ const express = require("express");
 //pg
 const pg = require("pg");
 //db name
-const DB_NAME = "acme_travel_db";
+const DB_NAME = "acme_restaurants_db";
 //port
 const PORT = 3000;
 //db client
