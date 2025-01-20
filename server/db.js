@@ -77,12 +77,12 @@ const fetchReservations = async (id) => {
 };
 
 // create reservation
-const createReservation = async (
+const createReservation = async ({
   date,
   party_count,
   restaurant_id,
-  customer_id
-) => {
+  customer_id,
+}) => {
   const SQL = `
         INSERT INTO Reservations(id, date, party_count, restaurant_id, customer_id) VALUES($1, $2, $3, $4, $5) RETURNING *
     `;

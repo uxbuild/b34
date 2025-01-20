@@ -61,8 +61,8 @@ const init = async () => {
   // GET customers
   app.get("/api/customers", async (req, res, next) => {
     try {
-        console.log('GET /api/customers');
-        res.status(200).json(await fetchCustomers());
+      console.log("GET /api/customers");
+      res.status(200).json(await fetchCustomers());
     } catch (error) {
       next(error);
     }
@@ -70,8 +70,8 @@ const init = async () => {
   // GET restaurants
   app.get("/api/restaurants", async (req, res, next) => {
     try {
-        console.log('GET /api/restaurants');
-        res.status(200).json(await fetchRestaurants());
+      console.log("GET /api/restaurants");
+      res.status(200).json(await fetchRestaurants());
     } catch (error) {
       next(error);
     }
@@ -79,13 +79,36 @@ const init = async () => {
   // GET reservations
   app.get("/api/reservations", async (req, res, next) => {
     try {
-        console.log('GET /api/reservations');
-        res.status(200).json(await fetchReservations());
+      console.log("GET /api/reservations");
+      res.status(200).json(await fetchReservations());
     } catch (error) {
       next(error);
     }
   });
-  // POST reservations
+
+  // POST reservation:
+  app.post(
+    "/api/customers/:customer_id/reservations",
+    async (req, res, next) => {
+      try {
+        console.log("DATE:", req.body.date);
+        console.log("PARTY:", req.body.party_count);
+        console.log("RESTAURANT:", req.body.restaurant_id);
+        console.log("CUSTOMER:", req.params.customer_id);
+
+        res.status(201).json(
+          await createReservation({
+            date: req.body.date,
+            party_count: req.body.party_count,
+            restaurant_id: req.body.restaurant_id,
+            customer_id: req.params.customer_id,
+          })
+        );
+      } catch (error) {
+        next(error);
+      }
+    }
+  );
   // DELETE reservation
 
   // ERROR handling, invoked when there are 4 arguments.
