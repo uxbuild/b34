@@ -4,5 +4,5 @@
 - createTables DONE
 - createCustomer, createRestaurant DONE
 - createReservation DONE
-- destroyReservation = in progress..
+- destroyReservation DONE
 - error route DONE
