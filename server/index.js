@@ -33,10 +33,14 @@ const init = async () => {
   console.log("created tables");
 
   // test: create customer
-  console.log(await createCustomer("Bob"));
+  console.log(await createCustomer("Bob Dylan"));
+  console.log(await createCustomer("Bob Marley"));
+  console.log(await createCustomer("Bobby McFerrin"));
 
   // test: create restaurant
   console.log(await createRestaurant("White Castle"));
+  console.log(await createRestaurant("McDonald's"));
+  console.log(await createRestaurant("Kentucky Fried Chicken (KFC)"));
 
   // test: create reservation
   // console.log(await createReservation());
@@ -110,7 +114,23 @@ const init = async () => {
     }
   );
   // DELETE reservation
+app.delete('/api/customers/:customer_id/reservations/:reservation_id', async (req, res, next) => {
+    try {
 
+        console.log('DELETE reservation..');
+        console.log('******');
+        console.log('REQUEST PARAMS ', req.params);
+        console.log('******');
+        console.log('RESERVATION ', req.params.reservationId);
+        console.log('CUSTOMER ', req.params.customerId);
+        console.log('******');
+        
+        await destroyReservation({reservation_id:req.params.reservation_id, customer_id: req.params.customer_id});
+        res.status(204).send("reservation deleted..??");
+    } catch (error) {
+        next(error);
+    }
+});
   // ERROR handling, invoked when there are 4 arguments.
   app.use((err, req, res, next) => {
     res.status(err.status || 500).send({ error: err.message || err });

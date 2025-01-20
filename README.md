@@ -1,5 +1,8 @@
 # b34: Reservation Planner
 
-- index route
-- createTables db
-- createCustomer, createRestaurant
+- index route DONE
+- createTables DONE
+- createCustomer, createRestaurant DONE
+- createReservation DONE
+- destroyReservation DONE
+- error route DONE
