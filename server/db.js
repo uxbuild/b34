@@ -23,8 +23,14 @@ const createTables = async () => {
         id UUID PRIMARY KEY,
         date DATE NOT NULL,
         party_count INTEGER NOT NULL,
-        restaurant_id UUID REFERENCES Restaurants(id) NOT NULL,
-        customer_id UUID REFERENCES Customers(id) NOT NULL
+        restaurant_id UUID,
+        customer_id UUID,
+        FOREIGN KEY (restaurant_id) REFERENCES Restaurants(id) 
+            ON UPDATE CASCADE
+            ON DELETE CASCADE,
+        FOREIGN KEY (customer_id) REFERENCES Customers(id)
+            ON UPDATE CASCADE
+            ON DELETE CASCADE
     );
   `;
 
@@ -51,14 +57,21 @@ const createRestaurant = async (name) => {
 
 // fetch customers
 const fetchCustomers = async (id) => {
-    const SQL = `SELECT * FROM Customers`;
+  const SQL = `SELECT * FROM Customers`;
   const response = await client.query(SQL);
   return response.rows;
 };
 
 // fetch restaurants
 const fetchRestaurants = async (id) => {
-    const SQL = `SELECT * FROM Restaurants`;
+  const SQL = `SELECT * FROM Restaurants`;
+  const response = await client.query(SQL);
+  return response.rows;
+};
+
+// fetch reservations
+const fetchReservations = async (id) => {
+  const SQL = `SELECT * FROM Reservations`;
   const response = await client.query(SQL);
   return response.rows;
 };
@@ -69,7 +82,19 @@ const createReservation = async (
   party_count,
   restaurant_id,
   customer_id
-) => {};
+) => {
+  const SQL = `
+        INSERT INTO Reservations(id, date, party_count, restaurant_id, customer_id) VALUES($1, $2, $3, $4, $5) RETURNING *
+    `;
+  const response = await client.query(SQL, [
+    uuid.v4(),
+    date,
+    party_count,
+    restaurant_id,
+    customer_id,
+  ]);
+  return response.rows[0];
+};
 
 // destroy reservation
 const destroyReservation = async (id) => {};
@@ -82,5 +107,6 @@ module.exports = {
   createReservation,
   fetchCustomers,
   fetchRestaurants,
+  fetchReservations,
   destroyReservation,
 };
