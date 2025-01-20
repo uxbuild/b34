@@ -97,7 +97,18 @@ const createReservation = async ({
 };
 
 // destroy reservation
-const destroyReservation = async (id) => {};
+const destroyReservation = async ({reservation_id, customer_id}) => {
+    
+    // only delete customer reservations..
+    console.log('DELETE Reservation..');
+    console.log('RESERVATION ', reservation_id);
+    console.log('CUSTOMER ', customer_id);
+    
+    const SQL = `
+        DELETE FROM Reservations WHERE id = $1 AND customer_id = $2
+    `;
+    await client.query(SQL,[reservation_id, customer_id]);
+};
 
 //export
 module.exports = {
